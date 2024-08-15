@@ -1,10 +1,11 @@
 import { Module, Logger } from '@nestjs/common';
-import { AppController } from '../controllers/app';
-import { AppService } from '../services/app';
 import { ConfigModule } from '@nestjs/config';
 import { APP_ENV } from './../enums';
 import { KnexModule } from './knex';
 import { APPLICATION_NAME } from 'src/const';
+import { ErrorInterceptor, TransformInterceptor } from 'src/interceptors';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { AuthModule } from './auth';
 
 @Module({
   imports: [
@@ -81,8 +82,18 @@ import { APPLICATION_NAME } from 'src/const';
         };
       },
     }),
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorInterceptor,
+    },
+  ],
 })
 export class AppModule {}

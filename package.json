@@ -17,15 +17,22 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "knex:local:migrate:make": "cross-env NODE_ENV=local knex --knexfile src/knexfile.ts migrate:make",
+    "knex:local:migrate:rollback": "cross-env NODE_ENV=local knex --knexfile src/knexfile.ts migrate:rollback",
+    "knex:local:seed:make": "cross-env NODE_ENV=local knex --knexfile src/knexfile.ts seed:make",
+    "knex:local:migrate:latest": "cross-env NODE_ENV=local knex --knexfile src/knexfile.ts migrate:latest",
+    "knex:local:seed:run": "cross-env NODE_ENV=local knex --knexfile src/knexfile.ts seed:run"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "knex": "^3.1.0",
+    "nestjs-knex": "^2.0.0",
     "pg": "^8.12.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"

@@ -1,0 +1,1 @@
+export { QueryFailedError } from './query-failed';
