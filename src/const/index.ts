@@ -5,3 +5,7 @@ export const ACCESS_DENIED = 'Access Denied';
 export const INVALID_REFRESH_TOKEN = 'Invalid refresh token';
 export const BEARER = 'bearer';
 export const TOKEN_EXPIRE_IN_MINUTES = 3600;
+export const INVALID_TOKEN = 'Invalid token';
+export const TOKEN_EXPIRED = 'Token Expired';
+export const TOKEN_IS_MISSING = 'Token is missing';
+export const AUTHORIZATION_HEADER_MISSING = 'Authorization header is missing';

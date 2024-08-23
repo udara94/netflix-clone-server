@@ -6,6 +6,7 @@ import { APPLICATION_NAME } from 'src/const';
 import { ErrorInterceptor, TransformInterceptor } from 'src/interceptors';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthModule } from './auth';
+import { ProfileModule } from './profile';
 
 @Module({
   imports: [
@@ -83,6 +84,7 @@ import { AuthModule } from './auth';
       },
     }),
     AuthModule,
+    ProfileModule,
   ],
   controllers: [],
   providers: [
