@@ -6,7 +6,11 @@ import { Video } from '../../entities';
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
   await knex('video_genre').del();
+  await knex('video_cast').del();
+  await knex('video_director');
   await knex('genres').del();
+  await knex('casts').del();
+  await knex('directors').del();
   await knex('videos').del();
 
   // await knex('genres').insert(genreList);
@@ -63,11 +67,76 @@ export async function seed(knex: Knex): Promise<void> {
           .returning('*');
       }
     }
+
+    for (const name of item.cast) {
+      const existingCast = await knex('casts').where({ name: name }).first();
+
+      let castItem = existingCast;
+
+      if (!existingCast) {
+        const newCast = await knex('casts')
+          .insert({ name: name })
+          .returning('*');
+        castItem = newCast[0];
+      }
+
+      const existingVideoCast = await knex('video_cast')
+        .where({
+          video_id: videoData[0].id,
+          cast_id: castItem.id,
+        })
+        .first();
+
+      if (!existingVideoCast) {
+        const videoCast = await knex('video_cast').insert({
+          video_id: videoData[0].id,
+          cast_id: castItem.id,
+        });
+      }
+    }
+
+    for (const director of item.directors) {
+      const existingDirector = await knex('directors')
+        .where({ name: director })
+        .first();
+
+      let directorItem = existingDirector;
+
+      if (!existingDirector) {
+        const newDirector = await knex('directors')
+          .insert({ name: director })
+          .returning('*');
+        directorItem = newDirector[0];
+      }
+
+      const existingVideoDirector = await knex('video_director')
+        .where({
+          video_id: videoData[0].id,
+          director_id: directorItem.id,
+        })
+        .first();
+
+      if (!existingVideoDirector) {
+        const videoDirector = await knex('video_director').insert({
+          video_id: videoData[0].id,
+          director_id: directorItem.id,
+        });
+      }
+    }
   }
 
   await knex.raw(
     `SELECT setval('"genres_id_seq"', (SELECT MAX(id) FROM genres))`,
   );
+
+  await knex.raw(
+    `SELECT setval('"casts_id_seq"', (SELECT MAX(id) FROM casts))`,
+  );
+
+  await knex.raw(
+    `SELECT setval('"directors_id_seq"', (SELECT MAX(id) FROM directors))`,
+  );
+
   await knex.raw(
     `SELECT setval('"videos_id_seq"', (SELECT MAX(id) FROM videos))`,
   );
