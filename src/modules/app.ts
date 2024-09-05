@@ -7,6 +7,7 @@ import { ErrorInterceptor, TransformInterceptor } from 'src/interceptors';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthModule } from './auth';
 import { ProfileModule } from './profile';
+import { VideoModule } from './video';
 
 @Module({
   imports: [
@@ -85,6 +86,7 @@ import { ProfileModule } from './profile';
     }),
     AuthModule,
     ProfileModule,
+    VideoModule,
   ],
   controllers: [],
   providers: [
