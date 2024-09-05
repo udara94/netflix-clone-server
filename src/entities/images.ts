@@ -1,3 +1,5 @@
+import { ImageSet } from 'src/types/interfaces';
+
 export class VideoImages {
   show_id: number | string;
   vertical_poster_w240: string;
@@ -56,6 +58,33 @@ export class VideoImagesResponse {
 
   static fromEntity(image: VideoImages): VideoImagesResponse {
     return new VideoImagesResponse(image);
+  }
+
+  getImageSet(): ImageSet {
+    const imageSetResponse: ImageSet = {
+      verticalPoster: {
+        w240: this.verticalPosterW240,
+        w360: this.verticalPosterW360,
+        w480: this.verticalPosterW480,
+        w600: this.verticalPosterW600,
+        w720: this.verticalPosterW720,
+      },
+      horizontalPoster: {
+        w360: this.horizontalPosterW360,
+        w480: this.horizontalPosterW480,
+        w720: this.horizontalPosterW720,
+        w1080: this.horizontalPosterW1080,
+        w1440: this.horizontalPosterW1440,
+      },
+      horizontalBackdrop: {
+        w360: this.horizontalBackdropW360,
+        w480: this.horizontalBackdropW480,
+        w720: this.horizontalBackdropW720,
+        w1080: this.horizontalBackdropW1080,
+        w1440: this.horizontalBackdropW1440,
+      },
+    };
+    return imageSetResponse;
   }
 }
 
